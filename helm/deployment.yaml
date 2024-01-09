@@ -1,0 +1,53 @@
+# app-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: app
+          image: vaibhavdashore0203/app_bs:v21
+          env:
+            - name: APP_URL
+              value: "http://apprepo.labs.squareops.in"
+            - name: DB_CONNECTION
+              value: "mysql"
+            - name: DB_HOST
+              value: "mysql-service.repo.svc:3306"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_DATABASE
+              value: "bookstack-dev"
+            - name: DB_USERNAME
+              value: "bookstack-test"
+            - name: TEST_DATABASE_URL
+              value: "mysql://mysql-service.repo.svc:3306"
+            - name: MAIL_DRIVER
+              value: "smtp"
+            - name: MAIL_HOST
+              value: "mailhog"
+            - name: MAIL_PORT
+              value: "1025"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DB_PASSWORD
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: app-init-script
+              mountPath: /usr/local/etc/php/conf.d/xdebug.ini
+      volumes:
+        - name: app-init-script
+          configMap:
+            name: app-config

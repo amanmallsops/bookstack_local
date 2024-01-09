@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  xdebug.ini: |
+    ; xdebug.ini
+
+    [xdebug]
+    zend_extension=xdebug.so
+    xdebug.remote_enable=1
+    xdebug.remote_host=host.docker.internal
+    xdebug.remote_port=9090
+    xdebug.remote_log=/tmp/xdebug.log
+
+    ; Enable the gd extension
+    extension=gd

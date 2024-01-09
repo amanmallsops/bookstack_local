@@ -1,0 +1,14 @@
+# Use the official MySQL 8 image as the base image
+FROM mysql:5.6
+
+# Set environment variables for MySQL
+ENV MYSQL_DATABASE=bookstack-dev \
+    MYSQL_USER=bookstack-test \
+    MYSQL_PASSWORD=bookstack-test \
+    MYSQL_RANDOM_ROOT_PASSWORD='true'
+
+
+# Copy initialization scripts to the docker-entrypoint-initdb.d directory
+COPY ./dev/docker/init.db /docker-entrypoint-initdb.d
+# Define a volume for MySQL data
+VOLUME ["/var/lib/mysql"]

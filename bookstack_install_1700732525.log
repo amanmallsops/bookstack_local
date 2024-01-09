@@ -1,0 +1,5 @@
+This script logs full output to /home/vd/skaf/dockertask/BookStack/bookstack_install_1700732525.log which may help upon issues.
+
+Enter the domain (or IP if not using a domain) you want to host BookStack on and press [ENTER].
+Examples: my-site.com or docs.my-site.com or 172.19.32.78
+ERROR: A domain must be provided to run this script
